@@ -6,6 +6,10 @@ var app = app || {};
 app.LibraryView = Backbone.View.extend({
     el: '#books',
 
+    events: {
+        'click #add': 'addBook'
+    },
+
     /**
      * データの配列を受け取ってapp.Libraryのコンストラクタに渡している。
      * これはサンプルデータとしてコレクションに与えられ、アプリケーションが
@@ -14,6 +18,8 @@ app.LibraryView = Backbone.View.extend({
     initialize: function(initialBooks) {
         this.collection = new app.Library(initialBooks);
         this.render();
+
+        this.listenTo(this.collection, 'add', this.renderBook);
     },
 
     /*
@@ -35,5 +41,19 @@ app.LibraryView = Backbone.View.extend({
             model: item
         });
         this.$el.append(bookView.render().el);
+    },
+
+    addBook: function(e) {
+        e.preventDefault();
+
+        var formData = {};
+        $('#addBook div').children('input').each(function(i, el) {
+            var val = $(el).val();
+            if (val != '') {
+                formData[el.id] = val;
+            }
+        });
+
+        this.collection.add(new app.Book(formData));
     }
 });
