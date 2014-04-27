@@ -43,7 +43,7 @@ app.configure(function() {
     app.use(app.router);
 
     // 静的コンテンツが置かれた場所を示す
-    app.use(express.static(path.join(application_root, 'BackboneREST')));
+    app.use(express.static(path.join(application_root, 'site')));
 
     // 開発中にはすべてのエラーを表示する
     app.use(express.errorHandler({
@@ -55,11 +55,6 @@ app.configure(function() {
 
 
 // ルート
-app.get('/', function(req, res) {
-    res.sendfile('index.html')
-});
-
-
 app.get('/api/books', function(req, res) {
     return BookModel.find(function(err, books) {
                if (!err) {
