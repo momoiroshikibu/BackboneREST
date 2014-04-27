@@ -60,7 +60,7 @@ app.get('/', function(req, res) {
 });
 
 
-app.get('/api/books', function(req, rese) {
+app.get('/api/books', function(req, res) {
     return BookModel.find(function(err, books) {
                if (!err) {
                    return res.send(books)
