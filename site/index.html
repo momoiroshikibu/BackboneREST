@@ -3,6 +3,7 @@
     <meta charset="UTF-8"/>
     <title>Backbone.jsによるライブラリアプリケーション</title>
     <link rel="stylesheet" href="css/screen.css">
+    <link rel="stylesheet" href="css/jquery-ui.custom.css">
   </head>
   <body>
 
@@ -30,15 +31,21 @@
       <ul>
         <li><%= title %></li>
         <li><%= author %></li>
-        <li><%= releaseDate %></li>
-        <li><%= keywords %></li>
+        <li><%= $.format.date(releaseDate, 'MMdd yyyy') %></li>
+        <li>
+          <% _.each(keywords, function(key) { %>
+          <%= key.keyword %>
+          <% }); %>
+        </li>
       </ul>
       <button class="delete">削除</button>
     </script>
 
     <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/jquery-ui.custom.js"></script>
     <script src="js/lib/underscore.js"></script>
     <script src="js/lib/backbone.js"></script>
+    <script src="js/lib/jquery-dateFormat.js"></script>
     <script src="js/models/book.js"></script>
     <script src="js/collections/library.js"></script>
     <script src="js/views/book.js"></script>
