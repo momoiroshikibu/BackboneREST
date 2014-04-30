@@ -8,6 +8,9 @@ var express = require('express'), // WAF
 ;
 
 
+/*
+ * Database
+ */
 // データベースに接続
 mongoose.connect('mongodb://localhost/library_database');
 
@@ -28,6 +31,9 @@ var BookModel = mongoose.model('Book', Book);
 
 
 
+/*
+ * Application
+ */
 // サーバを作成
 var app = express();
 
@@ -54,7 +60,9 @@ app.configure(function() {
 
 
 
-// ルート
+/*
+ * 本のリストを取得する
+ */
 app.get('/api/books', function(req, res) {
     return BookModel.find(function(err, books) {
                if (!err) {
@@ -65,6 +73,9 @@ app.get('/api/books', function(req, res) {
            });
 });
 
+/**
+ * 本を登録する
+ */
 app.post('/api/books', function(req, res) {
     var book = new BookModel({
         title: req.body.title,
@@ -82,7 +93,9 @@ app.post('/api/books', function(req, res) {
     return res.send(book);
 });
 
-// 指定されたIDを持つ本を返す
+/**
+ * 指定されたIDを持つ本を返す
+ */
 app.get('/api/books/:id', function(req, res) {
     return BookModel.findById(req.params.id, function(err, book) {
 
@@ -94,7 +107,9 @@ app.get('/api/books/:id', function(req, res) {
            });
 });
 
-// 本のデータを更新する
+/**
+ * 本のデータを更新する
+ */
 app.put('/api/books/:id', function(req, res) {
     console.log('更新します: ' + req.body.titl);
     return BookModel.findById(req.params.id, function(err, book) {
@@ -114,7 +129,9 @@ app.put('/api/books/:id', function(req, res) {
            })
 });
 
-// 本のデータを削除する
+/**
+ * 本のデータを削除する
+ */
 app.delete('/api/books/:id', function(req, res){
     console.log('削除する本のID:' + req.params.id);
     return BookModel.findById(req.params.id, function(err, book) {
@@ -130,7 +147,9 @@ app.delete('/api/books/:id', function(req, res){
 });
 
 
-
+/*
+ * Run Server
+ */
 var port = 4711;
 app.listen(port, function() {
     console.log('Expressサーバがポート %dで起動しました。 モード: %s', port, app.settings.env)
